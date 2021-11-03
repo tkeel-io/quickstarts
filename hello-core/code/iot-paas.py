@@ -9,7 +9,7 @@ from paho.mqtt import client as mqtt_client
 
 keel_url = "http://192.168.123.9:30707/v0.1.0"
 broker = "192.168.123.9"
-port = 30149
+port = 30789
 
 
 def create_entity_token(entity_id, entity_type, user_id):
@@ -64,7 +64,7 @@ def on_connect(client, userdata, flags, rc):
 
 
 if __name__ == "__main__":
-    entity_id = "00iotd-" + uuid.uuid4().hex
+    entity_id = "iotd-" + uuid.uuid4().hex
     entity_type = "device"
     user_id = "abc"
     print("base entity info")
