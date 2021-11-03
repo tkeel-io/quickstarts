@@ -1,0 +1,38 @@
+@startuml
+
+== create entity token ==
+client -> keel: create entity token Request
+keel -> auth: create entity token Request
+keel <- auth: create entity token Response
+client <- keel: create entity token Response
+
+
+== create entity ==
+client -> keel: create entity Request
+keel -> core: create entity Request
+keel <- core: create entity Response
+client <- keel: create entity Response
+
+== update entity properties ==
+
+mqttclient -> mqttbroker: publish messages
+mqttbroker -> pubsub: publish messages
+core <- pubsub: consume messages, update entity properties
+
+== get entity ==
+client -> keel: get entity Request
+keel -> core: get entity Request
+keel <- core: get entity Response
+client <- keel: get entity Response
+
+== subscription ==
+client -> keel: create subscription Request
+keel -> core: create subscription Request
+keel <- core: create subscription Response
+client <- keel: create entity Response
+mqttclient -> mqttbroker: publish messages
+mqttbroker -> pubsub: publish messages
+core <- pubsub: consume messages
+core -> pubsub: publish messages
+consumerClient <- pubsub
+@enduml
