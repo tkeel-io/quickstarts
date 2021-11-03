@@ -1,5 +1,5 @@
 ## 🚪 快速入门
-Core 是 tKeel 的一个重要基础组件，拥有单独部署能力，使用相关特性做满足广大用户需求的功能也是我们竭力想要的。
+Core 是 tKeel 的一个重要基础组件，也拥有单独部署能力，使用相关特性做满足广大用户需求的功能也是我们竭力想要的。
 
 ### 安装需要
 🔧 在使用 Core 之前请先确保你做足了准备。 
@@ -10,15 +10,29 @@ Core 是 tKeel 的一个重要基础组件，拥有单独部署能力，使用�
 ### 通过 tKeel 安装
 Core 作为 tKeel 的基础组件，相关 API 的调用均通过 keel 代理实现。（详细请见[tKeel CLI 安装文档](https://github.com/tkeel-io/cli ))
 
-### core 作为 tKeel 组件运行
+![img.png](img/core-invoke.png)
 外部程序可以通过keel代理调用core的API接口，通过设备接入提供的mqtt broker发送数据，从core订阅的数据会写入pubsub，subclient消费pubsub的数据。
 
+keel有两种访问形式。  
+#### 外网流量访问
 
-![img.png](img/core-invoke.png)
+```
+KEEL_NODE_PORT=30777 # 如果有更改请查看keel的chart中plugin_components.pluginPort变量
+curl http://$NODE_ID:$KEEL_NODE_PORT/$VERSION/$PLUGIN_ID/$METHOD
+```
+ 
+#### 内部流量访问
+1. 直接访问  
+    ```bash
+    curl http://keel:$PORT/$VERSION/$PLUGIN_ID/$METHOD
+    ```
+2. dapr边车访问
+    ```bash
+    curl http://127.0.0.1:3500/v1.0/invoke/keel/$PLUGIN_ID/$METHOD
+    ```
 #### 示例
 在 tKeel 相关组件安装完成之后，[Python 示例](code/iot-paas.py) 展示了生成 MQTT 使用的 `token`，然后创建实体，上报属性，获取快照，订阅实体的属性等功能。  
 为了方便说明，下面是我们使用外部流量方式访问 Keel，和 Python 作为示例语言的代码。我们需要keel和mqtt broker的服务端口用于演示。
-
 
 ![img.png](img/sequence.png)
 
