@@ -11,6 +11,7 @@ Core 是 tKeel 的一个重要基础组件，也拥有单独部署能力，使�
 Core 作为 tKeel 的基础组件，相关 API 的调用均通过 keel 代理实现。（详细请见[tKeel CLI 安装文档](https://github.com/tkeel-io/cli ))
 
 ![img.png](img/core-invoke.png)
+
 外部程序可以通过keel代理调用core的API接口，通过设备接入提供的mqtt broker发送数据，从core订阅的数据会写入pubsub，subclient消费pubsub的数据。
 
 keel有两种访问形式。  
