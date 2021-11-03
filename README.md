@@ -23,7 +23,7 @@
 您可以有如下几个选型开始这些示例：
 
 - 如果您想要尝试所有的示例，那么请您使用 `Git` 直接 [克隆该仓库](https://github.com/tkeel-io/quickstart.git )。然后，只需去到你感兴趣的那个示例目录下更具具体的 README 的说明然后开始示例。
-- 如果您只对一两个特定示例感兴趣，那么您可以只下载这些示例的内容，然后按照各个 README 中的说明进行操作。
+- 如果您只对一两个特定示例感兴趣，那么您可以 [指定下载](https://stackoverflow.com/questions/7106012/download-a-single-folder-or-directory-from-a-github-repo ) 这些示例的内容，然后按照各个 README 中的说明进行操作。
 
 ### 贡献您的示例
 
