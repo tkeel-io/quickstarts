@@ -12,6 +12,8 @@ Core 作为 tKeel 的基础组件，相关 API 的调用均通过 keel 代理实
 
 ### core 作为 tKeel 组件运行
 外部程序可以通过keel代理调用core的API接口，通过设备接入提供的mqtt broker发送数据，从core订阅的数据会写入pubsub，subclient消费pubsub的数据。
+
+
 ![img.png](img/core-invoke.png)
 #### 示例
 在 tKeel 相关组件安装完成之后，[Python 示例](code/iot-paas.py) 展示了生成 MQTT 使用的 `token`，然后创建实体，上报属性，获取快照，订阅实体的属性等功能。  
