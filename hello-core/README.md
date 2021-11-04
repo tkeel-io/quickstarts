@@ -112,7 +112,7 @@ k8s 中运行的 client 的日志里会打印出订阅的属性数据。
 
 先确定 client 的 pod 名称。
 ```bash
-$ kubectl get pod |grep client
+$ kubectl get pod | grep client
 client-98cc866df-mg4wg                   2/2     Running   0          14h
 ```
 运行查看日志的命令。
@@ -203,7 +203,7 @@ def create_subscription(entity_id, entity_type, user_id, plugin_id, subscription
 ```
 
 ###### 消费 topic 数据
-消费程序作为一个独立的 app 消费相关 topic 数据并展示[消费示例](code/subclient)
+消费程序作为一个独立的 app 消费相关 topic 数据并展示 [消费示例](code/subclient)
 ```python
 # Source: examples/subclient/app.py
 import flask
