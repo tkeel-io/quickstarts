@@ -2,7 +2,7 @@
 Core 是 tKeel 物联网开放平台的一个重要基础组件，也拥有单独部署能力，使用相关特性做满足广大用户需求的功能也是我们的最大志愿。
 
 ### 安装需要
-🔧 在使用 Core 之前请先确保你做足了准备。 
+🔧 在使用 Core 之前请先确保你做足了准备。 dapr和tkeel需要安装在同一个namespace中，比如keel-system，需要在kubectl的配置中指定，或者在命令参数中加上``` -n keel-system```。
 1. [Kubernetes](https://kubernetes.io/)
 2. [Dapr with k8s](https://docs.dapr.io/getting-started/)
 
@@ -17,24 +17,24 @@ Core 作为 tKeel 的基础组件，相关 API 的调用均通过 keel 代理实
 
 </div>
 外部程序可以通过 Keel 代理调用 core 的 API 接口，通过设备接入提供的 MQTT broker 发送数据，从 core 订阅的数据会写入 pubsub，subclient 消费 pubsub 的数据。
-:q
+
 ### keel 有两种访问形式。 
 
 #### 外网流量访问
 
 ```bash
-$ KEEL_NODE_PORT=30777 # 如果有更改请查看 keel 的 chart 中 plugin_components.pluginPort 变量
-$ curl http://$NODE_ID:$KEEL_NODE_PORT/$VERSION/$PLUGIN_ID/$METHOD
+KEEL_NODE_PORT=30777 # 如果有更改请查看 keel 的 chart 中 plugin_components.pluginPort 变量
+curl http://$NODE_ID:$KEEL_NODE_PORT/$VERSION/$PLUGIN_ID/$METHOD
 ```
  
 #### 内部流量访问
 1. 直接访问  
     ```bash
-    $ curl http://keel:$PORT/$VERSION/$PLUGIN_ID/$METHOD
+    curl http://keel:$PORT/$VERSION/$PLUGIN_ID/$METHOD
     ```
 2. dapr 边车访问
     ```bash
-    $ curl http://127.0.0.1:3500/v1.0/invoke/keel/$PLUGIN_ID/$METHOD
+    curl http://127.0.0.1:3500/v1.0/invoke/keel/$PLUGIN_ID/$METHOD
     ```
 #### 示例
 在 tKeel 相关组件安装完成之后，[Python 示例](code/iot-paas.py) 展示了生成 MQTT 使用的 `token`，然后创建实体，上报属性，获取快照，订阅实体的属性等功能。  
@@ -42,8 +42,8 @@ $ curl http://$NODE_ID:$KEEL_NODE_PORT/$VERSION/$PLUGIN_ID/$METHOD
 
 ##### 1. 下载示例代码
 ```bash
-$ git clone https://github.com/tkeel-io/quickstarts.git
-$ cd quickstarts/hello-world
+git clone https://github.com/tkeel-io/quickstarts.git
+cd quickstarts/hello-world
 ```
 
 ##### 2. 获取服务IP和端口
@@ -54,14 +54,15 @@ $ kubectl get -o jsonpath="{.status.addresses}" node master1
 ```
 2. Keel 服务端口
 ```bash
-$ kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services keel
-30707
+kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services keel
 ```
+您将通过该命令获取到 keel 服务端口，比如 `30707`
 3. MQTT Server 服务端口
 ```bash
-$ kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services emqx
-31875
+kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services emqx
 ```
+您将通过该命令获取到 emqx 服务的端口，比如 `31875`
+
 ##### 3. 修改相关配置
 keel openapi 服务地址为 k8s ip:keel 暴露的 NodePort 端口，broker 的 ip 为 k8s ip 端口为 MQTT server 的端口。
 
@@ -75,7 +76,7 @@ port = 31875
 ##### 4. 运行代码
 运行消费 pubsub 的 client (需要先运行 client，会创建订阅使用的 pubsub)。
 ```bash
-$ kubectl create -f code/subclient/client.yaml
+kubectl create -f code/subclient/client.yaml
 ```
 运行 iot-paaspy，运行之后会创建相关的 token，实体，上报属性。
 ```bash
