@@ -42,7 +42,7 @@ cd quickstarts/hello-world
 ```
 
 ##### 2. 获取服务IP和端口
-1. k8s 部署ip地址
+1. k8s 的部署地址
 ```bash
 kubectl get -o jsonpath="{.status.addresses}" node master1
 [{"address":"192.168.123.5","type":"InternalIP"},{"address":"master1","type":"Hostname"}]%
@@ -60,7 +60,7 @@ kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services emqx
 ##### 3. 修改相关配置
 keel openapi 服务地址为k8s ip:keel暴露的nodeport端口，broker的ip为k8s ip端口为mqtt server的端口。
 
-修改quickstarts/hello-core/code/iot-paas.py文件相关ip和端口
+修改quickstarts/hello-core/code/iot-paas.py文件相关ip和端口。
 ```python
 // Source: quickstarts/hello-core/code/iot-paas.py 
 keel_url = "http://192.168.123.5:30707/v0.1.0"
@@ -68,7 +68,7 @@ broker = "192.168.123.5"
 port = 31875
 ```
 ##### 4. 运行代码
-运行消费pubsub的client，需要先运行client创建订阅使用的pubsub。
+运行消费pubsub的client(需要先运行client，会创建订阅使用的pubsub)。
 ```bash
 kubectl create -f code/subclient/client.yaml
 ```
@@ -104,6 +104,12 @@ get entity
 {"p1": {"value": 76, "time": 1635989989}}
 ```
 k8s中运行的client的日志里会打印出订阅的属性数据。
+先确定client的pod名称
+```bash
+kubectl get pod |grep client
+client-98cc866df-mg4wg                   2/2     Running   0          14h
+```
+运行查看日志的命令
 ```bash
 kubectl logs -f client-98cc866df-mg4wg -c python
  * Serving Flask app 'app' (lazy loading)
