@@ -68,17 +68,60 @@ broker = "192.168.123.5"
 port = 31875
 ```
 ##### 4. 运行代码
-运行消费pubsub的client
+运行消费pubsub的client，需要先运行client创建订阅使用的pubsub。
 ```bash
 kubectl create -f code/subclient/client.yaml
 ```
-运行iot-paaspy
+运行iot-paaspy，运行之后会创建相关的token，实体，上报属性。
 ```bash
 python3 code/iot-paas.py
-```
-运行之后会创建相关的token，实体，上报属性，client的日志里会打印出订阅的属性数据
 
-##### 5. 相关代码说明
+base entity info
+entity_id =  iotd-0a7cf5ad8c8f4936a376b8ec28bb1e95
+entity_type =  device
+user_id =  abc
+--------------------------------------------------------------------------------
+get entity token
+token= eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJrZWVsIiwiZWlkIjoiaW90ZC0wYTdjZjVhZDhjOGY0OTM2YTM3NmI4ZWMyOGJiMWU5NSIsImV4cCI6IjIwMjItMTEtMDRUMDE6Mzk6MzguNzI2MjUyMTgxWiIsImlhdCI6IjIwMjEtMTEtMDRUMDE6Mzk6MzguNzI2MjUyMTgxWiIsImlzcyI6Im1hbmFnZXIiLCJqdGkiOiI3MDYyMDRlNS02MGEyLTRiZjYtYjgwNC0zZDU4OTcxM2RhYWMiLCJuYmYiOiIyMDIxLTExLTA0VDAxOjM5OjM4LjcyNjI1MjE4MVoiLCJzdWIiOiJlbnRpdHkiLCJ0aWQiOiIiLCJ0eXAiOiJkZXZpY2UiLCJ1aWQiOiJhYmMifQ.FExemvaZv0xEid0wBVChKi8dnqqWsE4MyadqVhvJzeI7CSvSSTSymLWroFl-zb5cJTsgUVGXNOENU3GabrdQtZLbK2FseME3GOsz33UAIR69--bJRtBbqPASKEOXsmlApRPjL5mGr3sFp5ECaL4rDx-6o52Iz4yqchhROaUEENc
+--------------------------------------------------------------------------------
+create entity with token
+{'id': 'iotd-0a7cf5ad8c8f4936a376b8ec28bb1e95', 'type': 'device', 'owner': 'abc', 'status': 'active', 'version': 1, 'plugin_id': 'pluginA', 'last_time': 1635989979862, 'mappers': None, 'properties': {'token': 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJrZWVsIiwiZWlkIjoiaW90ZC0wYTdjZjVhZDhjOGY0OTM2YTM3NmI4ZWMyOGJiMWU5NSIsImV4cCI6IjIwMjItMTEtMDRUMDE6Mzk6MzguNzI2MjUyMTgxWiIsImlhdCI6IjIwMjEtMTEtMDRUMDE6Mzk6MzguNzI2MjUyMTgxWiIsImlzcyI6Im1hbmFnZXIiLCJqdGkiOiI3MDYyMDRlNS02MGEyLTRiZjYtYjgwNC0zZDU4OTcxM2RhYWMiLCJuYmYiOiIyMDIxLTExLTA0VDAxOjM5OjM4LjcyNjI1MjE4MVoiLCJzdWIiOiJlbnRpdHkiLCJ0aWQiOiIiLCJ0eXAiOiJkZXZpY2UiLCJ1aWQiOiJhYmMifQ.FExemvaZv0xEid0wBVChKi8dnqqWsE4MyadqVhvJzeI7CSvSSTSymLWroFl-zb5cJTsgUVGXNOENU3GabrdQtZLbK2FseME3GOsz33UAIR69--bJRtBbqPASKEOXsmlApRPjL5mGr3sFp5ECaL4rDx-6o52Iz4yqchhROaUEENc'}}
+create entity iotd-0a7cf5ad8c8f4936a376b8ec28bb1e95 success
+--------------------------------------------------------------------------------
+create subscription
+{'mode': 'realtime', 'source': 'ignore', 'filter': 'insert into abc select iotd-0a7cf5ad8c8f4936a376b8ec28bb1e95.p1', 'target': 'ignore', 'topic': 'abc', 'pubsub_name': 'client-pubsub'}
+{'id': 'iotd-0a7cf5ad8c8f4936a376b8ec28bb1e95sub', 'type': 'SUBSCRIPTION', 'owner': 'abc', 'status': 'active', 'version': 1, 'plugin_id': 'pluginA', 'last_time': 1635989981005, 'mappers': None, 'properties': {'filter': 'insert into abc select iotd-0a7cf5ad8c8f4936a376b8ec28bb1e95.p1', 'mode': 'realtime', 'pubsub_name': 'client-pubsub', 'source': 'ignore', 'target': 'ignore', 'topic': 'abc'}}
+--------------------------------------------------------------------------------
+get subscription
+{'id': 'iotd-0a7cf5ad8c8f4936a376b8ec28bb1e95sub', 'type': 'SUBSCRIPTION', 'owner': 'abc', 'status': 'active', 'version': 1, 'plugin_id': 'pluginA', 'last_time': 1635989981005, 'mappers': None, 'properties': {'filter': 'insert into abc select iotd-0a7cf5ad8c8f4936a376b8ec28bb1e95.p1', 'mode': 'realtime', 'pubsub_name': 'client-pubsub', 'source': 'ignore', 'target': 'ignore', 'topic': 'abc'}}
+--------------------------------------------------------------------------------
+update properties by mqtt
+Connected to MQTT Broker!
+{"p1": {"value": 25, "time": 1635989984}}
+--------------------------------------------------------------------------------
+get entity
+{'p1': {'time': 1635989984, 'value': 25}, 'token': 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJrZWVsIiwiZWlkIjoiaW90ZC0wYTdjZjVhZDhjOGY0OTM2YTM3NmI4ZWMyOGJiMWU5NSIsImV4cCI6IjIwMjItMTEtMDRUMDE6Mzk6MzguNzI2MjUyMTgxWiIsImlhdCI6IjIwMjEtMTEtMDRUMDE6Mzk6MzguNzI2MjUyMTgxWiIsImlzcyI6Im1hbmFnZXIiLCJqdGkiOiI3MDYyMDRlNS02MGEyLTRiZjYtYjgwNC0zZDU4OTcxM2RhYWMiLCJuYmYiOiIyMDIxLTExLTA0VDAxOjM5OjM4LjcyNjI1MjE4MVoiLCJzdWIiOiJlbnRpdHkiLCJ0aWQiOiIiLCJ0eXAiOiJkZXZpY2UiLCJ1aWQiOiJhYmMifQ.FExemvaZv0xEid0wBVChKi8dnqqWsE4MyadqVhvJzeI7CSvSSTSymLWroFl-zb5cJTsgUVGXNOENU3GabrdQtZLbK2FseME3GOsz33UAIR69--bJRtBbqPASKEOXsmlApRPjL5mGr3sFp5ECaL4rDx-6o52Iz4yqchhROaUEENc'}
+{"p1": {"value": 76, "time": 1635989989}}
+```
+k8s中运行的client的日志里会打印出订阅的属性数据。
+```bash
+kubectl logs -f client-98cc866df-mg4wg -c python
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+127.0.0.1 - - [03/Nov/2021 11:02:14] "GET /dapr/config HTTP/1.1" 404 -
+127.0.0.1 - - [03/Nov/2021 11:02:14] "GET /dapr/subscribe HTTP/1.1" 200 -
+{'id': '0f8ac498-ad9f-4e6a-bc66-4c2cac4cc3a3', 'specversion': '1.0', 'source': 'core', 'type': 'com.dapr.event.sent', 'pubsubname': 'client-pubsub', 'traceid': '00-b46bd00b53ed6b1f269b47d9ad1e1206-7585025a75b6d58c-00', 'datacontenttype': 'text/plain', 'topic': 'abc', 'data': '{"p1":{"time":1635989984,"value":25}}'}
+127.0.0.1 - - [04/Nov/2021 01:39:44] "POST /dsstatus HTTP/1.1" 200 -
+{'specversion': '1.0', 'type': 'com.dapr.event.sent', 'topic': 'abc', 'pubsubname': 'client-pubsub', 'traceid': '00-2385b49b92141587108bbbcdb3c11aaf-16ed33df7371137b-00', 'data': '{"p1":{"time":1635989989,"value":76}}', 'id': '31cf5fe0-da42-407f-9d3f-7d7311a7ec06', 'datacontenttype': 'text/plain', 'source': 'core'}
+127.0.0.1 - - [04/Nov/2021 01:39:49] "POST /dsstatus HTTP/1.1" 200 -
+
+```
+
+##### 5. 代码说明
 ###### 创建 token
 ```python
 // Source: examples/iot-paas.py
