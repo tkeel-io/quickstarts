@@ -35,25 +35,51 @@ curl http://$NODE_ID:$KEEL_NODE_PORT/$VERSION/$PLUGIN_ID/$METHOD
 在 tKeel 相关组件安装完成之后，[Python 示例](code/iot-paas.py) 展示了生成 MQTT 使用的 `token`，然后创建实体，上报属性，获取快照，订阅实体的属性等功能。  
 为了方便说明，下面是我们使用外部流量方式访问 Keel，和 Python 作为示例语言的代码。我们需要keel和mqtt broker的服务端口用于演示。
 
-![img.png](img/sequence.png)
-
-##### 获取服务端口
-1. Keel 服务端口
+##### 1. 下载示例代码
 ```bash
-$ KEEL_PORT=$(kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services keel)
-```
-2. MQTT Server 服务端口
-```bash
-$ MQTT_PORT=$(kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services emqx)
+git clone https://github.com/tkeel-io/quickstarts.git
+cd quickstarts/hello-world
 ```
 
-keel openapi 服务地址为k8s ip:keel暴露的nodeport端口
+##### 2. 获取服务IP和端口
+1. k8s 部署ip地址
+```bash
+kubectl get -o jsonpath="{.status.addresses}" node master1
+[{"address":"192.168.123.5","type":"InternalIP"},{"address":"master1","type":"Hostname"}]%
+```
+2. Keel 服务端口
+```bash
+kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services keel
+30707
+```
+3. MQTT Server 服务端口
+```bash
+kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services emqx
+31875
+```
+##### 3. 修改相关配置
+keel openapi 服务地址为k8s ip:keel暴露的nodeport端口，broker的ip为k8s ip端口为mqtt server的端口。
+
+修改quickstarts/hello-core/code/iot-paas.py文件相关ip和端口
 ```python
-// Source: examples/iot-paas.py
-keel_url = "http://{host}:{port}/v0.1.0"
+// Source: quickstarts/hello-core/code/iot-paas.py 
+keel_url = "http://192.168.123.5:30707/v0.1.0"
+broker = "192.168.123.5"
+port = 31875
 ```
+##### 4. 运行代码
+运行消费pubsub的client
+```bash
+kubectl create -f code/subclient/client.yaml
+```
+运行iot-paaspy
+```bash
+python3 code/iot-paas.py
+```
+运行之后会创建相关的token，实体，上报属性，client的日志里会打印出订阅的属性数据
 
-##### 创建 token
+##### 5. 相关代码说明
+###### 创建 token
 ```python
 // Source: examples/iot-paas.py
 def create_entity_token(entity_id, entity_type, user_id):
@@ -63,7 +89,7 @@ def create_entity_token(entity_id, entity_type, user_id):
     return res.json()["data"]["entity_token"]
 ```
 
-##### 创建实体
+###### 创建实体
 ```python
 // Source: examples/iot-paas.py
 def create_entity(entity_id, entity_type, user_id, plugin_id, token):
@@ -75,7 +101,7 @@ def create_entity(entity_id, entity_type, user_id, plugin_id, token):
     print(res.json())
 ```
 
-##### 上报实体属性
+###### 上报实体属性
 ```python
 // Source: examples/iot-paas.py
 def on_connect(client, userdata, flags, rc):
@@ -94,7 +120,7 @@ payload = json.dumps(dict(p1=dict(value=random.randint(1, 100), time=int(time.ti
 client.publish("system/test", payload=payload)
 ```
 
-##### 获取实体快照
+###### 获取实体快照
 ```python
 // Source: examples/iot-paas.py
 def get_entity(entity_id, entity_type, user_id, plugin_id):
@@ -106,7 +132,7 @@ def get_entity(entity_id, entity_type, user_id, plugin_id):
 
 ```
 
-##### 订阅实体
+###### 订阅实体
 运行订阅实体之前，先要创建订阅目的地的pubsub，可以通过运行消费topic的示例yaml创建[消费示例yaml](code/subclient/client.yaml)
 
 ```python
@@ -121,7 +147,7 @@ def create_subscription(entity_id, entity_type, user_id, plugin_id, subscription
     print(res.json())
 ```
 
-##### 消费 topic 数据
+###### 消费 topic 数据
 消费程序作为一个独立的app消费相关topic数据并展示[消费示例](code/subclient)
 ```python
 // Source: examples/subclient/app.py
@@ -129,7 +155,6 @@ import flask
 from flask import request, jsonify
 from flask_cors import CORS
 import json
-import sys
 
 app = flask.Flask(__name__)
 CORS(app)
