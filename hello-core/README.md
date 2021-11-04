@@ -104,12 +104,13 @@ get entity
 {"p1": {"value": 76, "time": 1635989989}}
 ```
 k8s中运行的client的日志里会打印出订阅的属性数据。
-先确定client的pod名称
+
+先确定client的pod名称。
 ```bash
 kubectl get pod |grep client
 client-98cc866df-mg4wg                   2/2     Running   0          14h
 ```
-运行查看日志的命令
+运行查看日志的命令。
 ```bash
 kubectl logs -f client-98cc866df-mg4wg -c python
  * Serving Flask app 'app' (lazy loading)
