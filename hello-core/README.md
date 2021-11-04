@@ -44,17 +44,17 @@ cd quickstarts/hello-world
 ##### 2. 获取服务IP和端口
 1. k8s 的部署地址
 ```bash
-kubectl get -o jsonpath="{.status.addresses}" node master1
-[{"address":"192.168.123.5","type":"InternalIP"},{"address":"master1","type":"Hostname"}]%
+$ kubectl get -o jsonpath="{.status.addresses}" node master1
+[{"address":"192.168.123.5","type":"InternalIP"},{"address":"master1","type":"Hostname"}]
 ```
 2. Keel 服务端口
 ```bash
-kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services keel
+$ kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services keel
 30707
 ```
 3. MQTT Server 服务端口
 ```bash
-kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services emqx
+$ kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services emqx
 31875
 ```
 ##### 3. 修改相关配置
@@ -74,7 +74,7 @@ kubectl create -f code/subclient/client.yaml
 ```
 运行iot-paaspy，运行之后会创建相关的token，实体，上报属性。
 ```bash
-python3 code/iot-paas.py
+$ python3 code/iot-paas.py
 
 base entity info
 entity_id =  iotd-0a7cf5ad8c8f4936a376b8ec28bb1e95
@@ -107,12 +107,12 @@ k8s中运行的client的日志里会打印出订阅的属性数据。
 
 先确定client的pod名称。
 ```bash
-kubectl get pod |grep client
+$ kubectl get pod |grep client
 client-98cc866df-mg4wg                   2/2     Running   0          14h
 ```
 运行查看日志的命令。
 ```bash
-kubectl logs -f client-98cc866df-mg4wg -c python
+$ kubectl logs -f client-98cc866df-mg4wg -c python
  * Serving Flask app 'app' (lazy loading)
  * Environment: production
    WARNING: This is a development server. Do not use it in a production deployment.
