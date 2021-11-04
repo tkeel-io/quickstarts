@@ -1,5 +1,5 @@
 ## 🚪 快速入门
-Core 是 tKeel 的一个重要基础组件，也拥有单独部署能力，使用相关特性做满足广大用户需求的功能也是我们竭力想要的。
+Core 是 tKeel 物联网开放平台的一个重要基础组件，也拥有单独部署能力，使用相关特性做满足广大用户需求的功能也是我们的最大志愿。
 
 ### 安装需要
 🔧 在使用 Core 之前请先确保你做足了准备。 dapr和tkeel需要安装在同一个namespace中，比如keel-system，需要在kubectl的配置中指定，或者在命令参数中加上``` -n keel-system```。
@@ -8,17 +8,22 @@ Core 是 tKeel 的一个重要基础组件，也拥有单独部署能力，使�
 
 
 ### 通过 tKeel 安装
-Core 作为 tKeel 的基础组件，相关 API 的调用均通过 keel 代理实现。（详细请见[tKeel CLI 安装文档](https://github.com/tkeel-io/cli ))
+Core 作为 tKeel 的基础组件，相关 API 的调用均通过 keel 代理实现。（详细请见 [tKeel CLI 安装文档](https://github.com/tkeel-io/cli ))
+<div align="center">
 
 ![img.png](img/core-invoke.png)
 
-外部程序可以通过keel代理调用core的API接口，通过设备接入提供的mqtt broker发送数据，从core订阅的数据会写入pubsub，subclient消费pubsub的数据。
+<i>项目流程图</i>
 
-keel有两种访问形式。  
+</div>
+外部程序可以通过 Keel 代理调用 core 的 API 接口，通过设备接入提供的 MQTT broker 发送数据，从 core 订阅的数据会写入 pubsub，subclient 消费 pubsub 的数据。
+
+### keel 有两种访问形式。 
+
 #### 外网流量访问
 
-```
-KEEL_NODE_PORT=30777 # 如果有更改请查看keel的chart中plugin_components.pluginPort变量
+```bash
+KEEL_NODE_PORT=30777 # 如果有更改请查看 keel 的 chart 中 plugin_components.pluginPort 变量
 curl http://$NODE_ID:$KEEL_NODE_PORT/$VERSION/$PLUGIN_ID/$METHOD
 ```
  
@@ -27,13 +32,13 @@ curl http://$NODE_ID:$KEEL_NODE_PORT/$VERSION/$PLUGIN_ID/$METHOD
     ```bash
     curl http://keel:$PORT/$VERSION/$PLUGIN_ID/$METHOD
     ```
-2. dapr边车访问
+2. dapr 边车访问
     ```bash
     curl http://127.0.0.1:3500/v1.0/invoke/keel/$PLUGIN_ID/$METHOD
     ```
 #### 示例
 在 tKeel 相关组件安装完成之后，[Python 示例](code/iot-paas.py) 展示了生成 MQTT 使用的 `token`，然后创建实体，上报属性，获取快照，订阅实体的属性等功能。  
-为了方便说明，下面是我们使用外部流量方式访问 Keel，和 Python 作为示例语言的代码。我们需要keel和mqtt broker的服务端口用于演示。
+为了方便说明，下面是我们使用外部流量方式访问 Keel，和 Python 作为示例语言的代码。我们需要 keel 和 MQTT broker 的服务端口用于演示。
 
 ##### 1. 下载示例代码
 ```bash
@@ -49,30 +54,31 @@ $ kubectl get -o jsonpath="{.status.addresses}" node master1
 ```
 2. Keel 服务端口
 ```bash
-$ kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services keel
-30707
+kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services keel
 ```
+您将通过该命令获取到 keel 服务端口，比如 `30707`
 3. MQTT Server 服务端口
 ```bash
-$ kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services emqx
-31875
+kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services emqx
 ```
-##### 3. 修改相关配置
-keel openapi 服务地址为k8s ip:keel暴露的nodeport端口，broker的ip为k8s ip端口为mqtt server的端口。
+您将通过该命令获取到 emqx 服务的端口，比如 `31875`
 
-修改quickstarts/hello-core/code/iot-paas.py文件相关ip和端口。
+##### 3. 修改相关配置
+keel openapi 服务地址为 k8s ip:keel 暴露的 NodePort 端口，broker 的 ip 为 k8s ip 端口为 MQTT server 的端口。
+
+修改 `quickstarts/hello-core/code/iot-paas.py` 文件相关 **ip** 和 **端口**。
 ```python
-// Source: quickstarts/hello-core/code/iot-paas.py 
+# Source: quickstarts/hello-core/code/iot-paas.py 
 keel_url = "http://192.168.123.5:30707/v0.1.0"
 broker = "192.168.123.5"
 port = 31875
 ```
 ##### 4. 运行代码
-运行消费pubsub的client(需要先运行client，会创建订阅使用的pubsub)。
+运行消费 pubsub 的 client (需要先运行 client，会创建订阅使用的 pubsub)。
 ```bash
 kubectl create -f code/subclient/client.yaml
 ```
-运行iot-paaspy，运行之后会创建相关的token，实体，上报属性。
+运行 iot-paaspy，运行之后会创建相关的 token，实体，上报属性。
 ```bash
 $ python3 code/iot-paas.py
 
@@ -103,11 +109,11 @@ get entity
 {'p1': {'time': 1635989984, 'value': 25}, 'token': 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJrZWVsIiwiZWlkIjoiaW90ZC0wYTdjZjVhZDhjOGY0OTM2YTM3NmI4ZWMyOGJiMWU5NSIsImV4cCI6IjIwMjItMTEtMDRUMDE6Mzk6MzguNzI2MjUyMTgxWiIsImlhdCI6IjIwMjEtMTEtMDRUMDE6Mzk6MzguNzI2MjUyMTgxWiIsImlzcyI6Im1hbmFnZXIiLCJqdGkiOiI3MDYyMDRlNS02MGEyLTRiZjYtYjgwNC0zZDU4OTcxM2RhYWMiLCJuYmYiOiIyMDIxLTExLTA0VDAxOjM5OjM4LjcyNjI1MjE4MVoiLCJzdWIiOiJlbnRpdHkiLCJ0aWQiOiIiLCJ0eXAiOiJkZXZpY2UiLCJ1aWQiOiJhYmMifQ.FExemvaZv0xEid0wBVChKi8dnqqWsE4MyadqVhvJzeI7CSvSSTSymLWroFl-zb5cJTsgUVGXNOENU3GabrdQtZLbK2FseME3GOsz33UAIR69--bJRtBbqPASKEOXsmlApRPjL5mGr3sFp5ECaL4rDx-6o52Iz4yqchhROaUEENc'}
 {"p1": {"value": 76, "time": 1635989989}}
 ```
-k8s中运行的client的日志里会打印出订阅的属性数据。
+k8s 中运行的 client 的日志里会打印出订阅的属性数据。
 
-先确定client的pod名称。
+先确定 client 的 pod 名称。
 ```bash
-$ kubectl get pod |grep client
+$ kubectl get pod | grep client
 client-98cc866df-mg4wg                   2/2     Running   0          14h
 ```
 运行查看日志的命令。
@@ -131,7 +137,7 @@ $ kubectl logs -f client-98cc866df-mg4wg -c python
 ##### 5. 代码说明
 ###### 创建 token
 ```python
-// Source: examples/iot-paas.py
+# Source: examples/iot-paas.py
 def create_entity_token(entity_id, entity_type, user_id):
     data = dict(entity_id=entity_id, entity_type=entity_type, user_id=user_id)
     token_create = "/auth/token/create"
@@ -141,7 +147,7 @@ def create_entity_token(entity_id, entity_type, user_id):
 
 ###### 创建实体
 ```python
-// Source: examples/iot-paas.py
+# Source: examples/iot-paas.py
 def create_entity(entity_id, entity_type, user_id, plugin_id, token):
     query = dict(entity_id=entity_id, entity_type=entity_type, user_id=user_id, source="abc", plugin_id=plugin_id)
     entity_create = "/core/plugins/{plugin_id}/entities?id={entity_id}&type={entity_type}&owner={user_id}&source={source}".format(
@@ -153,7 +159,7 @@ def create_entity(entity_id, entity_type, user_id, plugin_id, token):
 
 ###### 上报实体属性
 ```python
-// Source: examples/iot-paas.py
+# Source: examples/iot-paas.py
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
         print("Connected to MQTT Broker!")
@@ -172,7 +178,7 @@ client.publish("system/test", payload=payload)
 
 ###### 获取实体快照
 ```python
-// Source: examples/iot-paas.py
+# Source: examples/iot-paas.py
 def get_entity(entity_id, entity_type, user_id, plugin_id):
     query = dict(entity_id=entity_id, entity_type=entity_type, user_id=user_id, plugin_id=plugin_id)
     entity_create = "/core/plugins/{plugin_id}/entities/{entity_id}?type={entity_type}&owner={user_id}&source={plugin_id}".format(
@@ -183,10 +189,10 @@ def get_entity(entity_id, entity_type, user_id, plugin_id):
 ```
 
 ###### 订阅实体
-运行订阅实体之前，先要创建订阅目的地的pubsub，可以通过运行消费topic的示例yaml创建[消费示例yaml](code/subclient/client.yaml)
+运行订阅实体之前，先要创建订阅目的地的 pubsub，可以通过运行消费 topic 的示例 yaml 创建 [消费示例 yaml](code/subclient/client.yaml)
 
 ```python
-// Source: examples/iot-paas.py
+# Source: examples/iot-paas.py
 def create_subscription(entity_id, entity_type, user_id, plugin_id, subscription_id):
     query = dict(entity_id=entity_id, entity_type=entity_type, user_id=user_id, source="abc", plugin_id=plugin_id, subscription_id=subscription_id)
     entity_create = "/core/plugins/{plugin_id}/subscriptions?id={subscription_id}&type={entity_type}&owner={user_id}&source={source}".format(
@@ -198,9 +204,9 @@ def create_subscription(entity_id, entity_type, user_id, plugin_id, subscription
 ```
 
 ###### 消费 topic 数据
-消费程序作为一个独立的app消费相关topic数据并展示[消费示例](code/subclient)
+消费程序作为一个独立的 app 消费相关 topic 数据并展示 [消费示例](code/subclient)
 ```python
-// Source: examples/subclient/app.py
+# Source: examples/subclient/app.py
 import flask
 from flask import request, jsonify
 from flask_cors import CORS
