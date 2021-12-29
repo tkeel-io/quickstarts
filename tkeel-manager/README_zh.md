@@ -15,7 +15,7 @@
 3. [helm repo](https://https://github.com/tkeel-io/helm-charts)
 
 ### 管理平台：
-* admin 登录
+* 系统管理员 登录
 ```bash
 curl -XGET "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/oauth2/admin?password=${ADMIN_PASSWORD}"
 ```
@@ -377,6 +377,13 @@ output
 
 4. 列出所有插件
 ```bash
+curl -XGET "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/plugins" \
+     -H 'Content-Type: application/json' \
+     -H "Authorization:${ADMIN_TOKEN}"
+```
+
+output
+```json
 {
     "code": 200,
     "msg": "ok",
@@ -592,8 +599,3 @@ curl -XGET "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/security/v1/tenants/users?t
      -H 'Content-Type: application/json' \
      -H "Authorization:${ADMIN_TOKEN}"
 ```
-
-### tKeel 用户平台
-
-1. 用户登录
-
