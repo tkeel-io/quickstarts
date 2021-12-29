@@ -8,7 +8,7 @@
 
 ### 安装需要
 🔧 在进行教程之前请先确保你做足了准备。
-  * dapr和tkeel需要安装在同一个namespace中，比如keel-system，需要在kubectl的配置中指定，或者在命令参数中加上``` -n keel-system```。
+  * dapr和tkeel需要安装在同一个 namespace 中，比如 keel-system，需要在 kubectl 的配置中指定，或者在命令参数中加上``` -n keel-system```。
   * 需要提供一个仓库地址并且将此插件打包上传至仓库。
 1. [Kubernetes](https://kubernetes.io/)
 2. [Dapr with k8s](https://docs.dapr.io/getting-started/)
@@ -56,10 +56,11 @@ output
 ```
 
 2. 添加仓库
-可将主仓库的 helm-chart fork后，更改 index.yaml 后设置 page 即可上传测试用的插件包。
+可将主仓库的 helm-chart fork 后，更改 index.yaml 后设置 page 即可上传测试用的插件包。
 此处 url 为 `https://tkeel-io.github.io/helm-charts` 即 `https://github.com/tkeelio/helm-charts/tree/repo/index` 内容。
 ```bash
 REPO_NAME=tkeel-default
+
 curl -XPOST "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/repos/${REPO_NAME}" \
      -H "Authorization:${ADMIN_TOKEN}" \
      -H 'Content-Type: application/json' \
@@ -216,8 +217,8 @@ output
 4. 获取仓库指定的安装包
 获取指定仓库中的指定安装包和版本。
 
-INSTALLER_NAME 指定的安装包名字。
-INSTALLER_VERSION 指定的安装包版本。
+`INSTALLER_NAME` 指定的安装包名字。
+`INSTALLER_VERSION` 指定的安装包版本。
 
 ```bash
 INSTALLER_NAME=hello-tkeel
@@ -272,6 +273,7 @@ output
 1. 安装插件
 ```bash
 PLUGIN_ID=hello-tkeel
+
 curl -XPOST "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/plugins/${PLUGIN_ID}" \
      -H 'Content-Type: application/json' \
      -H "Authorization:${ADMIN_TOKEN}" \
@@ -300,8 +302,8 @@ output
 
 2. 注册插件
 
-> * 必须经平台安装的插件才能被注册进来。
-> * 必须经平台注册后的插件才能被用户启用。
+> * **必须** 经平台安装的插件才能被注册进来。
+> * **必须** 经平台注册后的插件才能被用户启用。
 
 ```bash
 curl -XPOST "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/plugins/${PLUGIN_ID}/register" \
@@ -461,7 +463,7 @@ output
 6. 卸载插件
 从 K8S 中删除。
 
-> * 必须是未注册的插件才能被删除。
+> * **必须** 是未注册的插件才能被删除。
 
 ```bash
 curl -XDELETE "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/plugins/${PLUGIN_ID}"  \
