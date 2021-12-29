@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hello-tkeel.name" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ include "hello-tkeel.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "hello-tkeel.name" . }}
+  template:
+    metadata:
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: {{ include "hello-tkeel.name" . | quote }}
+        dapr.io/app-port: {{ .Values.pluginPort | quote }}
+        dapr.io/config: {{ .Values.daprConfig }}
+      labels:
+        app: {{ include "hello-tkeel.name" . }}
+    spec:
+      {{- if .imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .imagePullSecrets }}
+      {{- end }}
+      containers:
+        - name: {{ include "hello-tkeel.name" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.pluginPort }}
