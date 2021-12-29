@@ -3,7 +3,7 @@ Core 是 tKeel 物联网开放平台的一个重要基础组件，也拥有单�
 
 ### 安装需要
 🔧 在使用 Core 之前请先确保你做足了准备。
-  * dapr和tkeel需要安装在同一个namespace中，比如keel-system，需要在kubectl的配置中指定，或者在命令参数中加上``` -n keel-system```。
+  * dapr 和 tkeel 需要安装在同一个 namespace 中，比如 keel-system，需要在 kubectl 的配置中指定，或者在命令参数中加上``` -n keel-system```。
 1. [Kubernetes](https://kubernetes.io/)
 2. [Dapr with k8s](https://docs.dapr.io/getting-started/)
 
