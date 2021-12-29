@@ -9,7 +9,7 @@
 
 ### 安装需要
 🔧 在进行教程之前请先确保你做足了准备。
-  * dapr和tkeel需要安装在同一个namespace中，比如keel-system，需要在kubectl的配置中指定，或者在命令参数中加上``` -n keel-system```。
+  * dapr 和 tKeel 需要安装在同一个 namespace 中，比如 keel-system，需要在 kubectl 的配置中指定，或者在命令参数中加上``` -n keel-system```。
   * 需要已安装并注册 **hello-tkeel** 插件。
   * 需要已经创建了租户。
 1. [Kubernetes](https://kubernetes.io/)
@@ -39,7 +39,7 @@ output
 }
 ```
 
-2. 刷新
+2. 刷新 Token
 ```bash
 curl -XGET "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/security/v1/oauth/token?grant_type=refresh_token&refresh_token=NTA2M2RHOGETMWFKZC01ODVKLWI3NTETYTUZNMM5NJFIOTGX"
 ```
@@ -260,9 +260,7 @@ output
 HTTP_VERB=GET
 METHOD=hello
 USER_TOKEN=${TENANT_ADMIN_TOKEN}
-```
 
-```bash
 curl -X${HTTP_VERB} "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/${PLUGIN_ID}/${METHOD}" \
      -H 'Content-Type: application/json' \
      -H "Authorization: ${USER_TOKEN}"
