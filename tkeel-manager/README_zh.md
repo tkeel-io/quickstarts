@@ -59,12 +59,12 @@ output
 可将主仓库的 helm-chart fork 后，更改 index.yaml 后设置 page 即可上传测试用的插件包。
 此处 url 为 `https://tkeel-io.github.io/helm-charts` 即 `https://github.com/tkeelio/helm-charts/tree/repo/index` 内容。
 ```bash
-REPO_NAME=tkeel-default
+REPO_NAME=tkeel-c
 
 curl -XPOST "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/repos/${REPO_NAME}" \
      -H "Authorization:${ADMIN_TOKEN}" \
      -H 'Content-Type: application/json' \
-     -d '{"url":"https://tkeel-io.github.io/helm-charts"}'
+     -d '"https://odysseusc.github.io/helm-charts"'
 ```
 
 output
@@ -277,7 +277,7 @@ PLUGIN_ID=hello-tkeel
 curl -XPOST "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/plugins/${PLUGIN_ID}" \
      -H 'Content-Type: application/json' \
      -H "Authorization:${ADMIN_TOKEN}" \
-     -d '{"installer":{"name":"hello-tkeel","version":"0.3.0","repo":"tkeel-default","configuration":"cmVwbGljYUNvdW50OiAxDQpwbHVnaW5TZWNyZXQ6IGNoYW5nZW1lDQpwbHVnaW5Qb3J0OiA4MDgwDQoNCmRhcHJDb25maWc6IGhlbGxvLXRrZWVsDQoNCmltYWdlUHVsbFNlY3JldHM6ICIiDQoNCmltYWdlOg0KICByZXBvc2l0b3J5OiB0a2VlbGlvL2hlbGxvLXRrZWVsDQogIHRhZzogMC4zLjANCiAgcHVsbFBvbGljeTogQWx3YXlzDQo=","type":1}}'
+     -d '{"name":"hello-tkeel","version":"0.3.0","repo":"tkeel-default","configuration":"cmVwbGljYUNvdW50OiAxDQpwbHVnaW5TZWNyZXQ6IGNoYW5nZW1lDQpwbHVnaW5Qb3J0OiA4MDgwDQoNCmRhcHJDb25maWc6IGhlbGxvLXRrZWVsDQoNCmltYWdlUHVsbFNlY3JldHM6ICIiDQoNCmltYWdlOg0KICByZXBvc2l0b3J5OiB0a2VlbGlvL2hlbGxvLXRrZWVsDQogIHRhZzogMC4zLjANCiAgcHVsbFBvbGljeTogQWx3YXlzDQo=","type":1}'
 ```
 
 output
@@ -309,7 +309,7 @@ output
 curl -XPOST "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/plugins/${PLUGIN_ID}/register" \
      -H 'Content-Type: application/json' \
      -H "Authorization:${ADMIN_TOKEN}" \
-     -d '{"secret":"changeme"}'
+     -d '"changeme"'
 ```
 
 output

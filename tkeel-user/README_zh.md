@@ -60,7 +60,7 @@ output
 
 TENANT_ID 为 5
 ```bash
-TENANT_ADMIN_TOKEN='Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIwMDAwMDAiLCJleHAiOjE2NDA3NjU0MDcsInN1YiI6InVzci01LTZhYWRhZjM4YjdmMWUwNjg2ZjhiYWI1MWJmMjg3YjQ2In0.YCA_8jHf8zTL_HMeMdlIS0qzHurPnw2Rs-uYI6tdFdlvD7DIaIn62J5z5EOdrYVKRQyu681RXK9EpK_0CQeERQ'
+TENANT_ADMIN_TOKEN='Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIwMDAwMDAiLCJleHAiOjE2NDA4NTYwNjcsInN1YiI6InVzci0yLWFhMDAzYTYxNGVkYzQ4Yzc3MDExN2M3NDUyMjBhMmUxIn0.OqZqP-vOcG-O9iCC_Bv8xYsjOzh_k0cPDAeg6MXCAnCQvvj2hW_hOfUR4stf2QriHu2qHc0NnuySMfBMijc7OA'
 
 TENANT_ID=5
 ```
@@ -174,7 +174,7 @@ PLUGIN_ID=hello-tkeel
 curl -XPOST "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/plugins/${PLUGIN_ID}/tenants" \
      -H "Authorization: ${TENANT_ADMIN_TOKEN}" \
      -H 'Content-Type: application/json' \
-     -d '{"extra":"any data"}'
+     -d '"YW55IGRhdGE="'
 ```
 
 output
@@ -226,7 +226,7 @@ output
 curl -XDELETE "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/plugins/${PLUGIN_ID}/tenants" \
      -H "Authorization: ${TENANT_ADMIN_TOKEN}" \
      -H 'Content-Type: application/json' \
-     -d '{"extra":"any data"}'
+     -d '"YW55IGRhdGE="'
 ```
 output
 ```json
