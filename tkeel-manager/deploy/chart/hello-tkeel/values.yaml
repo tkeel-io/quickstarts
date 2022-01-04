@@ -1,0 +1,12 @@
+replicaCount: 1
+pluginSecret: changeme
+pluginPort: 8080
+
+daprConfig: hello-tkeel
+
+imagePullSecrets: ""
+
+image:
+  repository: tkeelio/hello-tkeel
+  tag: 0.3.0
+  pullPolicy: Always
