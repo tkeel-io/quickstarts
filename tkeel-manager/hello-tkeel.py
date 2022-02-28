@@ -47,13 +47,13 @@ def status():
     return jsonify({"res": {"ret": 0, "msg": "ok"}, "status": 3})
 
 
-@app.route('/v1/tenant/bind', methods=['POST'])
+@app.route('/v1/tenant/enable', methods=['GET'])
 def tenant_bind():
     print("tenant/bind", flush=True)
     return jsonify({"res": {"ret": 0, "msg": "ok"}})
 
 
-@app.route('/v1/tenant/unbind', methods=['POST'])
+@app.route('/v1/tenant/disable', methods=['GET'])
 def tenant_unbind():
     print("tenant/unbind", flush=True)
     return jsonify({"res": {"ret": 0, "msg": "ok"}})

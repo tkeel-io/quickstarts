@@ -1,8 +1,4 @@
 replicaCount: 1
-pluginSecret: changeme
-pluginPort: 8080
-
-daprConfig: hello-tkeel
 
 imagePullSecrets: ""
 

@@ -34,7 +34,7 @@ output
 ```
 下文中所有管理平台的 token 均以返回值中 accessToken 替换。
 ```bash
-ADMIN_TOKEN='Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ0S2VlbCIsImV4cCI6IjIwMjEtMTItMjhUMDg6MTg6MDAuNDAxMTY3ODMxWiIsImlhdCI6IjIwMjEtMTItMjhUMDc6MTg6MDAuNDAxMTY3ODMxWiIsImlzcyI6InJ1ZGRlciIsImp0aSI6Ijc2Mjk0YzBlLTc2MjEtNDcwYy04M2I5LWM1M2YxOWE4NWQ4OCIsIm5iZiI6IjIwMjEtMTItMjhUMDc6MTg6MDAuNDAxMTY3ODMxWiIsInN1YiI6ImFkbWluIn0.AbJtk8dZxpj1jsxuCNbrLV1j6uPy-NHO7S6fkOQusQc'
+ADMIN_TOKEN='Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ0S2VlbCIsImV4cCI6IjIwMjItMDEtMjZUMTI6MTI6NDIuNTc1NTU0OTg0WiIsImlhdCI6IjIwMjItMDEtMjZUMTE6MTI6NDIuNTc1NTU0OTg0WiIsImlzcyI6InJ1ZGRlciIsImp0aSI6IjBiMjBkZTc2LWYzZDktNDYwMy1hYWE2LTdiNDBhNTZjNmUxNSIsIm5iZiI6IjIwMjItMDEtMjZUMTE6MTI6NDIuNTc1NTU0OTg0WiIsInN1YiI6ImFkbWluIn0.CNuso09QXYqpE9Oz4otpE-j9b8MvhsfHgCntXXlCzas'
 ```
 
 #### 仓库管理
@@ -300,30 +300,7 @@ output
 }
 ```
 
-2. 注册插件
-
-> * **必须** 经平台安装的插件才能被注册进来。
-> * **必须** 经平台注册后的插件才能被用户启用。
-
-```bash
-curl -XPOST "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/plugins/${PLUGIN_ID}/register" \
-     -H 'Content-Type: application/json' \
-     -H "Authorization:${ADMIN_TOKEN}" \
-     -d '"changeme"'
-```
-
-output
-```json
-{
-    "code": 200,
-    "msg": "ok",
-    "data": {
-        "@type": "type.googleapis.com/google.protobuf.Empty",
-        "value": {}
-    }
-}
-```
-3. 获取插件信息
+2. 获取插件信息
 获取指定名称的插件信息。
 ```bash
 curl -XGET "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/plugins/${PLUGIN_ID}" \
@@ -377,7 +354,7 @@ output
 }
 ```
 
-4. 列出所有插件
+3. 列出所有插件
 ```bash
 curl -XGET "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/plugins" \
      -H 'Content-Type: application/json' \
@@ -448,19 +425,7 @@ output
 }
 ```
 
-5. 注销插件
-仅注销，并未从 K8S 中删除。当前未对此做过多处理，后续可在此处处理同名插件问题。
-```bash
-curl -XDELETE "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/rudder/v1/plugins/${PLUGIN_ID}/register"  \
-     -H 'Content-Type: application/json' \
-     -H "Authorization:${ADMIN_TOKEN}"
-```
-output
-```json
-{"code":200, "msg":"ok", "data":{"@type":"type.googleapis.com/api.plugin.v1.UnregisterPluginResponse", "plugin":{"id":"hello-tkeel", "tkeel_version":"v0.3.0", "secret":"changeme", "register_timestamp":"1640678948", "active_tenantes":["_tKeel_system"], "status":"RUNNING", "brief_installer_info":{"name":"hello-tkeel", "version":"0.3.0", "repo":"tkeel-default"}, "console_entries":[{"id":"echo-test-users", "name":"echo-users", "path":"/users", "entry":"https://tkeel-console-plugin-users.pek3b.qingstor.com/index.html"}, {"id":"echo-test", "name":"echo-test", "children":[{"id":"echo-test-plugins", "name":"echo-test-plugins", "path":"/plugins", "entry":"https://tkeel-console-plugin-plugins.pek3b.qingstor.com/index.html"}]}]}}}
-```
-
-6. 卸载插件
+4. 卸载插件
 从 K8S 中删除。
 
 > * **必须** 是未注册的插件才能被删除。
