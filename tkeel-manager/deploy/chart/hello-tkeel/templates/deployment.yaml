@@ -12,11 +12,6 @@ spec:
       app: {{ include "hello-tkeel.name" . }}
   template:
     metadata:
-      annotations:
-        dapr.io/enabled: "true"
-        dapr.io/app-id: {{ include "hello-tkeel.name" . | quote }}
-        dapr.io/app-port: {{ .Values.pluginPort | quote }}
-        dapr.io/config: {{ .Values.daprConfig }}
       labels:
         app: {{ include "hello-tkeel.name" . }}
     spec:
@@ -29,4 +24,4 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.pluginPort }}
+            - containerPort: 8080

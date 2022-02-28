@@ -23,7 +23,7 @@
 
 1. 登录
 ```bash
-curl -XGET "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/security/v1/oauth/token?grant_type=password&username=5-test_tenant_admin&password=123456"
+curl -XGET "http://${KEEL_SERVICE}:${KEEL_PORT}/apis/security/v1/oauth/token?grant_type=password&username=otz03t72-test_tenant_admin&password=123456"
 ```
 output
 ```json
@@ -60,7 +60,7 @@ output
 
 TENANT_ID 为 5
 ```bash
-TENANT_ADMIN_TOKEN='Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIwMDAwMDAiLCJleHAiOjE2NDA4NTYwNjcsInN1YiI6InVzci0yLWFhMDAzYTYxNGVkYzQ4Yzc3MDExN2M3NDUyMjBhMmUxIn0.OqZqP-vOcG-O9iCC_Bv8xYsjOzh_k0cPDAeg6MXCAnCQvvj2hW_hOfUR4stf2QriHu2qHc0NnuySMfBMijc7OA'
+TENANT_ADMIN_TOKEN='Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ0a2VlbCIsImV4cCI6MTY0MzIyMzE5Niwic3ViIjoidXNyLTkxNTcwMGYzZmMxZDI2OWM4YTJlZGFjYzY1NGYifQ.y96odLi5T8_bQZDX4-1Xh-HKYorhD_ZR1bdd9gCDyAD00LqCAzZXQAxM3Lf5yS5YmTi-Noy3Rar0QuNF2g299A'
 
 TENANT_ID=5
 ```
