@@ -1,0 +1,8 @@
+replicaCount: 1
+
+imagePullSecrets: ""
+
+image:
+  repository: tkeelio/tkeel-calc-mul
+  tag: latest
+  pullPolicy: Always
