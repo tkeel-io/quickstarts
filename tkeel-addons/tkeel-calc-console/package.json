@@ -1,11 +1,12 @@
 {
   "name": "@tkeel/console-plugin-tenant-calc",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "license": "Apache-2.0",
   "main": "index.js",
   "scripts": {
-    "preinstall": "npx only-allow npm",
-    "serve": "npx serve -p 3098 --cors"
+    "dev": "npx serve -p 3098 --cors",
+    "docker:build": "docker build -t=console-plugin-tenant-calc:latest .",
+    "preinstall": "npx only-allow npm"
   },
   "devDependencies": {
     "only-allow": "^1.1.1",
