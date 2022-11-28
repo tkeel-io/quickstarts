@@ -27,7 +27,7 @@ function request(path) {
     mount: (props) => {
       console.log('mount', props);
       window.globals = props;
-      return render(props);
+      return render();
     },
     unmount: (props) => {
       console.log('unmount', props);
@@ -36,7 +36,7 @@ function request(path) {
   };
 })(window);
 
-function render(props) {
+function render() {
   handleSubmit();
   return Promise.resolve();
 }
