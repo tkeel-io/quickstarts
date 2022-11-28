@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1,
+  maximum-scale=1, shrink-to-fit=no, viewport-fit=cover"
+    />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <title>Calc</title>
+  </head>
+
+  <body>
+    <div id="root">
+      <form id="calc-form" name="calc-form" class="calc-form">
+        <div class="calc-form-item">
+          <label for="x">x</label>
+          <input id="x" name="x" type="number" />
+        </div>
+        <div class="calc-form-item">
+          <label for="y">y</label>
+          <input id="y" name="y" type="number" />
+        </div>
+        <div class="calc-form-button-wrapper">
+          <button type="submit" class="calc-form-submit-button">
+            Calculate
+          </button>
+        </div>
+        <div>
+          <span>Result: </span>
+          <span id="calc-form-result" class="calc-form-result"></span>
+        </div>
+      </form>
+    </div>
+    <script src="./js/index.js"></script>
+  </body>
+</html>
