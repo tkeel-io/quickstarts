@@ -1,0 +1,34 @@
+.calc-form {
+  width: 300px;
+  padding: 32px;
+}
+
+.calc-form-item {
+  padding: 8px;
+}
+
+.calc-form-item > label {
+  margin-right: 12px;
+}
+
+.calc-form-item > input {
+  padding: 4px;
+  border-width: 1px;
+}
+
+.calc-form-button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+.calc-form-submit-button {
+  padding: 8px;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+.calc-form-result{
+  margin-left: 12px;
+}
