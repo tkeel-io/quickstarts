@@ -1,5 +1,5 @@
 .calc-form {
-  width: 300px;
+  width: 100%;
   padding: 32px;
 }
 
@@ -18,7 +18,7 @@
 
 .calc-form-button-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   padding: 8px;
 }
