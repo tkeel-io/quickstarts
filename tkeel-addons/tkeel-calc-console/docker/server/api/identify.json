@@ -3,18 +3,26 @@
     "ret": 0,
     "msg": "ok"
   },
-  "plugin_id": "console-plugin-tenant-calc",
+  "plugin_id": "tkeel-calc-console",
   "version": "1.0.0",
   "tkeel_version": "v0.4.0",
   "entries": [
     {
-      "id": "calc",
-      "name": "Calc",
+      "id": "quickstart-calc",
+      "name": "快速开始",
       "icon": "PuzzleTwoToneIcon",
-      "path": "/tenant-calc",
-      "entry": "/static/console-plugin-tenant-calc/",
-      "portal": 1
+      "children": [
+        {
+          "id": "console-plugin-tenant-calc",
+          "name": "Calc",
+          "icon": "PuzzleTwoToneIcon",
+          "path": "/tenant-calc",
+          "entry": "/static/tkeel-calc-console/",
+          "portal": 1
+        }
+      ]
     }
   ],
-  "dependence": []
+  "dependence": [
+  ]
 }

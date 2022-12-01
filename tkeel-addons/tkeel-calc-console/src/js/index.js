@@ -59,14 +59,21 @@ function fetchCalc(params) {
   const { x, y } = params;
   const url = `/tkeel-calc/calc?x=${x}&y=${y}`;
   return request(url).then((result) => {
-    const { code, data } = result;
+    const { code, data, msg } = result;
     if (code === 'io.tkeel.SUCCESS') {
+      handleStatus(code)
       const res = data.res ?? 20;
       return Promise.resolve(res);
     } else {
+      handleStatus(code+":"+msg)
       return Promise.reject(result);
     }
   });
+}
+
+function handleStatus(status) {
+  const calcFormResultElement = document.getElementById('calc-form-status');
+  calcFormResultElement.innerText = status;
 }
 
 function handleCalcRes(res) {
