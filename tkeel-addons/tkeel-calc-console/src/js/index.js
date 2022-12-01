@@ -2,7 +2,7 @@ function getBaseURL() {
   const { portalProps } = window.globals;
   const { origin, basePath } = portalProps.backend.api;
 
-  return `${origin}${basePath}`;
+  return `${origin ? origin : ''}${basePath ? basePath : ''}`;
 }
 
 function request(path) {
