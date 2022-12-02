@@ -6,6 +6,7 @@
 1. tkeel-cal: 计算插件，插件提供 cal 接口，并声明 calc-int-x-y 扩展点，通过不同插件来实现本扩展点，当前接口的返回值也随之改变。
 2. tkeel-cal-add: 加法插件，插件提供 add 接口来实现 tkeel-cal 插件的 calc-int-x-y 扩展点，通过将 x 和 y 相加再返回具体的结果给 tkeel-cal 插件。
 3. tkeel-cal-mul: 乘法插件，插件提供 mul 接口来实现 tkeel-cal 插件的 calc-int-x-y 扩展点，通过将 x 和 y相乘在返回具体的结果给 tkeel-cal 插件。
+4. tkeel-cal-console: 计算插件UI，插件提供前端界面。
 
 ## 安装需要
 🔧 在进行教程之前请先确保你做足了准备。
